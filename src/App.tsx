@@ -27,26 +27,23 @@ function App() {
   };
 
   useEffect(() => {
-    getBalance();
+    withoutConnectmethod();
   }, []);
+  
   useEffect(() => {
     if (account) {
       // callSendOperations();
       estimateGas();
       bigNumberOperation(2, 4);
-      transfer('0x61cC301393b93CF208211173A355237012aDaD38',1)
+      // transfer('0x61cC301393b93CF208211173A355237012aDaD38',1)
     }
   }, [account]);
 
   //Qno 3
-  const getBalance = async () => {
+  const withoutConnectmethod = async () => {
     try {
-      console.log("...", web3);
-      let bal = await instance.methods.balanceOf(
-        "0x89C1710A79aC6c3Ceb4ff48e6E6d8af14869515C"
-      );
-      bal = new BigNumber(bal).dividedBy(10 ** 18);
-      // console.log(bal.toFixed(0));
+      let name = await instance.methods.name().call();
+      console.log(name);
     } catch (err) {
       console.error(err);
     }
@@ -101,7 +98,7 @@ function App() {
   };
 
   //Qno 8
-  const transfer = async ( receiver: string, amount: number) => {
+  const transfer = async (receiver: string, amount: number) => {
     try {
       const amountWei = new BigNumber(amount).multipliedBy(10 ** 18);
       await instance.methods
