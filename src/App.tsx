@@ -2,7 +2,7 @@ import { useWeb3React } from "@web3-react/core";
 import BigNumber from "bignumber.js";
 import { useEffect } from "react";
 import "./App.css";
-import { instance } from "./blockChain/instance";
+import { instance, instancePublic } from "./blockChain/instance";
 import { injected, web3 } from "./config";
 import contract from "./blockChain/contract.json";
 function App() {
@@ -14,9 +14,9 @@ function App() {
       // await getBalance();
       // conversionToEth("1000000000000000000")
       // conversionTowei("1")
-      trackStatus(
-        "0x19a4d4031a9e0836556513696741dc8e5ab6328119675f5f83e330dd2bd1bcfb"
-      );
+      // trackStatus(
+      //   "0x3195734dc2145b9107f8039e8c93a0be1fcdd6db4877c2a600ef0af6bc703081"
+      // );
     } catch (err) {
       console.error(err);
     }
@@ -27,9 +27,11 @@ function App() {
   };
 
   useEffect(() => {
+    if(instance){
     withoutConnectmethod();
+    }
   }, []);
-  
+
   useEffect(() => {
     if (account) {
       // callSendOperations();
@@ -42,7 +44,7 @@ function App() {
   //Qno 3
   const withoutConnectmethod = async () => {
     try {
-      let name = await instance.methods.name().call();
+      let name = await instancePublic.methods.name().call()
       console.log(name);
     } catch (err) {
       console.error(err);

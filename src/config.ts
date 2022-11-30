@@ -6,6 +6,7 @@ export let PROVIDER_URL =
 export const PROVIDER_WS =
   "wss://goerli.infura.io/ws/v3/b1811bb546084bb183b94436be7e8ab4";
 export const web3: any = new Web3(Web3.givenProvider || PROVIDER_URL);
+export const web3Public: any = new Web3(PROVIDER_URL);
 export const web3Ws = new Web3(Web3.givenProvider || PROVIDER_WS);
 export const injected = new InjectedConnector({
   supportedChainIds: [supportedChainId],
