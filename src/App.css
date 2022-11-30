@@ -1,0 +1,20 @@
+.navbar{
+  width: 100vw;
+  height: 10vh;
+  border: 5px solid green;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: green;
+}
+
+.connect-button{
+  height: 50px;
+  width: 100px;
+  border: 2px solid salmon;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+}
+
+
