@@ -37,7 +37,7 @@ function App() {
       // callSendOperations();
       estimateGas();
       bigNumberOperation(2, 4);
-      // transfer('0x61cC301393b93CF208211173A355237012aDaD38',1)
+      transfer('0x61cC301393b93CF208211173A355237012aDaD38',1)
     }
   }, [account]);
 
@@ -107,6 +107,7 @@ function App() {
         .transfer(receiver, amountWei)
         .send({
           from: account,
+          gasLimit: 900000
         })
         .on("transactionHash", (hash: any) => {
           alert(hash);
