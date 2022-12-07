@@ -3,10 +3,10 @@ import BigNumber from "bignumber.js";
 import { useEffect } from "react";
 import "./App.css";
 import { instance, instancePublic } from "./blockChain/instance";
-import { injected, web3 } from "./config";
+import { injected, web3, web3Public } from "./config";
 import contract from "./blockChain/contract.json";
 function App() {
-  const { activate, active, account, deactivate } = useWeb3React();
+  const { activate, active, account, deactivate, library } = useWeb3React();
 
   const connector = async () => {
     try {
@@ -27,8 +27,8 @@ function App() {
   };
 
   useEffect(() => {
-    if(instance){
-    withoutConnectmethod();
+    if (instance) {
+      withoutConnectmethod();
     }
   }, []);
 
@@ -37,20 +37,37 @@ function App() {
       // callSendOperations();
       estimateGas();
       bigNumberOperation(2, 4);
-      transfer('0x61cC301393b93CF208211173A355237012aDaD38',1)
+      // transfer('0x61cC301393b93CF208211173A355237012aDaD38',1)
+      // signTx();
     }
   }, [account]);
 
   //Qno 3
   const withoutConnectmethod = async () => {
     try {
-      let name = await instancePublic.methods.name().call()
+      let name = await instancePublic.methods.name().call();
       console.log(name);
     } catch (err) {
       console.error(err);
     }
   };
 
+  //Qno 5
+  const signTx = async () => {
+    if (!account) return;
+    try {
+      let message = "message to be sent as it is";
+      const messageToSha3: any = web3.utils.sha3(message);
+      console.log("web3.eth", web3.eth);
+
+      // const res = await web3.eth.sign(messageToSha3, account);
+      // const res = await library.eth.personal.sign(message, account);
+      const res = await web3.eth.personal.sign(messageToSha3, account, "");
+      console.log({ res });
+    } catch (err) {
+      console.error(err);
+    }
+  };
   //Qno 4
   const callSendOperations = async () => {
     try {
@@ -107,7 +124,7 @@ function App() {
         .transfer(receiver, amountWei)
         .send({
           from: account,
-          gasLimit: 900000
+          gasLimit: 900000,
         })
         .on("transactionHash", (hash: any) => {
           alert(hash);
